@@ -26,8 +26,7 @@ public class CarView extends JFrame{
 
     JPanel gasPanel = new JPanel();
     JSpinner gasSpinner = new JSpinner();
-    int gasAmount = 0;
-    int brakeAmount = 100;
+    int adjustSpeed = 0;
     JLabel gasLabel = new JLabel("Amount of gas");
 
     JButton gasButton = new JButton("Gas");
@@ -56,8 +55,6 @@ public class CarView extends JFrame{
 
         this.add(drawPanel);
 
-
-
         SpinnerModel spinnerModel =
                 new SpinnerNumberModel(0, //initial value
                         0, //min
@@ -66,7 +63,7 @@ public class CarView extends JFrame{
         gasSpinner = new JSpinner(spinnerModel);
         gasSpinner.addChangeListener(new ChangeListener() {
             public void stateChanged(ChangeEvent e) {
-                gasAmount = (int) ((JSpinner)e.getSource()).getValue();
+                adjustSpeed = (int) ((JSpinner)e.getSource()).getValue();
             }
         });
 
@@ -105,12 +102,12 @@ public class CarView extends JFrame{
         gasButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                carC.gas(gasAmount);
+                carC.gas(adjustSpeed);
             }
         });
         brakeButton.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e) { carC.brake(brakeAmount);}
+            public void actionPerformed(ActionEvent e) { carC.brake(adjustSpeed);}
         });
 
         // Make the frame pack all it's components by respecting the sizes if possible.

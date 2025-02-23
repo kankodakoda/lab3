@@ -29,11 +29,10 @@ public class CarController {
         // Instance of this class
         CarController cc = new CarController();
 
-        cc.cars.add(new Volvo240(0, 0));
+        cc.cars.add(new Volvo240(600, 400));
 
         // Start a new view and send a reference of self
         cc.frame = new CarView("CarSim 1.0", cc);
-
         // Start the timer
         cc.timer.start();
     }
@@ -47,10 +46,22 @@ public class CarController {
                 car.move();
                 int x = (int) Math.round(car.getXPosition());
                 int y = (int) Math.round(car.getYPosition());
-                frame.drawPanel.moveit(x, y);
+
+                if (isCarCollidingWithFrame(car)) {
+                    car.turnLeft(180);
+                }
+
+                frame.drawPanel.moveit(x, y, car);
                 // repaint() calls the paintComponent method of the panel
                 frame.drawPanel.repaint();
             }
+        }
+
+        private boolean isCarCollidingWithFrame(Car car) {
+            return car.getXPosition() > frame.getWidth() - 115 ||
+                    car.getXPosition() < 0 ||
+                    car.getYPosition() > frame.getHeight() - 310 ||
+                    car.getYPosition() < 0;
         }
     }
 

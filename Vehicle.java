@@ -18,8 +18,8 @@ public abstract class Vehicle implements Movable {
         this.color = color;
         this.xPosition = xPosition;
         this.yPosition = yPosition;
-        currentSpeed = 0;
-        directionAngle = 0;
+        currentSpeed = 10;
+        directionAngle = 45;
     }
 
     public int getNrDoors() {
@@ -81,7 +81,6 @@ public abstract class Vehicle implements Movable {
             System.out.println("Not valid");
             return;
         }
-        System.out.println(currentSpeed+ " " +speedFactor()+ " "+ amount);
         decrementSpeed(amount);
     }
 
