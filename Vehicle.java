@@ -19,7 +19,7 @@ public abstract class Vehicle implements Movable {
         this.xPosition = xPosition;
         this.yPosition = yPosition;
         currentSpeed = 0;
-        directionAngle = 90;
+        directionAngle = 0;
     }
 
     public int getNrDoors() {
@@ -81,6 +81,7 @@ public abstract class Vehicle implements Movable {
             System.out.println("Not valid");
             return;
         }
+        System.out.println(currentSpeed+ " " +speedFactor()+ " "+ amount);
         decrementSpeed(amount);
     }
 
