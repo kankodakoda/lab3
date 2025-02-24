@@ -31,7 +31,7 @@ public class DrawPanel extends JPanel{
             return position;
         }
 
-        public void setPoint(Point newPosition) {
+        public void setPosition(Point newPosition) {
             position.x = newPosition.x;
             position.y = newPosition.y;
         }
@@ -73,31 +73,50 @@ public class DrawPanel extends JPanel{
         {
             ex.printStackTrace();
         }
-        graphicsObjects.add(new GraphicsObject(volvoImage, new Point(), new Volvo240(0,0)));
-        graphicsObjects.add(new GraphicsObject(saabImage, new Point(), new Saab95(0,0)));
-        graphicsObjects.add(new GraphicsObject(scaniaImage, new Point(), new Scania(0,0)));
+        graphicsObjects.add(new GraphicsObject(volvoImage, new Point(0,0), new Volvo240(0,0)));
+        graphicsObjects.add(new GraphicsObject(saabImage, new Point(0,100), new Saab95(0,100)));
+        graphicsObjects.add(new GraphicsObject(scaniaImage, new Point(0,200), new Scania(0,200)));
 
     }
 
     void moveit(int x, int y, Vehicle car){
+        for (GraphicsObject gObject : graphicsObjects) {
+            if (gObject.getCar().equals(car)) {
+                gObject.setPosition(new Point(x, y));  // Update position
+
+                // Debug: Print Image Positions
+                System.out.println("Updating " + car.getClass().getSimpleName() + " image to -> X: " + x + ", Y: " + y);
+            }
+        }
+    }
+
+
+
+    /*void moveit(int x, int y, Vehicle car){
         volvoPoint.x = x;
         volvoPoint.y = y;
         // Trying to make move function general
         for (GraphicsObject gObject : graphicsObjects) {
-            if (gObject.getCar() == carGetType??)
-                //update position
+            if (gObject.getCar() instanceof ) {
+                gObject.setPosition(new Point(x, y));
+            }
+
+            //update position
         }
 
-    }
+    }*/
+
+
 
     // This method is called each time the panel updates/refreshes/repaints itself
     // TODO: Change to suit your needs.
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        g.drawImage(volvoImage, volvoPoint.x, volvoPoint.y, null); // see javadoc for more info on the parameters
-        g.drawImage(volvoWorkshopImage, volvoWorkshopPoint.x, volvoWorkshopPoint.y, null);
-        g.drawImage(saabImage, saabPoint.x, saabPoint.y, null);
-        g.drawImage(scaniaImage, scaniaPoint.x, scaniaPoint.y, null);
+        for (GraphicsObject graObj : graphicsObjects) {
+            g.drawImage(graObj.getBufferedImage(), graObj.getPosition().x, graObj.getPosition().y, null);
+        }
+
     }
 }
+

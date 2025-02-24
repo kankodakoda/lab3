@@ -15,7 +15,7 @@ public class Saab95 extends Car {
 
     public void setTurboOn() {
         turboOn = true;
-    }
+        System.out.println("Turbo is turned on");}
 
     public void setTurboOff() {
         turboOn = false;

@@ -26,7 +26,7 @@ public class CarView extends JFrame{
 
     JPanel gasPanel = new JPanel();
     JSpinner gasSpinner = new JSpinner();
-    int adjustSpeed = 0;
+    int spinnerValue = 0;
     JLabel gasLabel = new JLabel("Amount of gas");
 
     JButton gasButton = new JButton("Gas");
@@ -63,7 +63,7 @@ public class CarView extends JFrame{
         gasSpinner = new JSpinner(spinnerModel);
         gasSpinner.addChangeListener(new ChangeListener() {
             public void stateChanged(ChangeEvent e) {
-                adjustSpeed = (int) ((JSpinner)e.getSource()).getValue();
+                spinnerValue = (int) ((JSpinner)e.getSource()).getValue();
             }
         });
 
@@ -102,13 +102,46 @@ public class CarView extends JFrame{
         gasButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                carC.gas(adjustSpeed);
+                carC.gas(spinnerValue);
             }
         });
         brakeButton.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e) { carC.brake(adjustSpeed);}
+            public void actionPerformed(ActionEvent e) { carC.brake(spinnerValue);}
         });
+        turboOnButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {carC.setTurboOn();}
+        });
+
+        turboOffButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {carC.setTurboOff();}
+        });
+
+        liftBedButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {carC.raiseRamp(spinnerValue);}
+        });
+
+        lowerBedButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {carC.lowerRamp(spinnerValue);}
+        });
+
+        startButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {carC.startAllCars();}
+        });
+
+        stopButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {carC.stopAllCars();}
+        });
+
+
+
+
 
         // Make the frame pack all it's components by respecting the sizes if possible.
         this.pack();

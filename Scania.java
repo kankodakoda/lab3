@@ -21,8 +21,11 @@ public class Scania extends Truck {
 
     public void raiseRamp(double amount) {
         // Use AngularLifts raise by amount function
-        if (getCurrentSpeed() == 0)
+        if (getCurrentSpeed() == 0) {
             angularLift.raiseRamp(amount);
+            System.out.println("Ramp raised to " + getRampAngle() + " degrees.");
+        }
+
         else
             System.out.println("Truck must be standing still to raise ramp");
     }
@@ -30,6 +33,7 @@ public class Scania extends Truck {
     public void lowerRamp(double amount) {
         // Use AngularLifts lower by amount function
         angularLift.lowerRamp(amount);
+        System.out.println("Ramp lowered to " + getRampAngle() + " degrees.");
     }
 
     @Override

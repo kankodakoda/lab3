@@ -29,7 +29,9 @@ public class CarController {
         // Instance of this class
         CarController cc = new CarController();
 
-        cc.cars.add(new Volvo240(600, 400));
+        cc.cars.add(new Volvo240(0, 0));
+        cc.cars.add(new Saab95(0,100));
+        cc.cars.add(new Scania(0,200));
 
         // Start a new view and send a reference of self
         cc.frame = new CarView("CarSim 1.0", cc);
@@ -46,7 +48,7 @@ public class CarController {
                 car.move();
                 int x = (int) Math.round(car.getXPosition());
                 int y = (int) Math.round(car.getYPosition());
-
+                System.out.println(car.getCurrentSpeed());
                 if (isCarCollidingWithFrame(car)) {
                     car.turnLeft(180);
                 }
@@ -79,4 +81,47 @@ public class CarController {
             car.brake(brake);
         }
     }
+
+    void setTurboOn() {
+        for (Vehicle car : cars) {
+            if (car instanceof Saab95)
+                ((Saab95) car).setTurboOn();
+        }
+
+    }
+
+    void setTurboOff() {
+        for (Vehicle car : cars) {
+            if (car instanceof Saab95)
+                ((Saab95) car).setTurboOff();
+        }
+    }
+
+    void raiseRamp(double amount) {
+        for (Vehicle car : cars) {
+            if (car instanceof Scania)
+                ((Scania) car).raiseRamp(amount);
+        }
+    }
+
+    void lowerRamp(double amount) {
+        for (Vehicle car : cars) {
+            if (car instanceof Scania) {
+                ((Scania) car).lowerRamp(amount);
+            }
+        }
+    }
+
+    void startAllCars() {
+        for (Vehicle car : cars) {
+            car.startEngine();
+        }
+    }
+
+    void stopAllCars() {
+        for (Vehicle car : cars) {
+            car.stopEngine();
+        }
+    }
+
 }

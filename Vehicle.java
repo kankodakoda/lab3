@@ -1,4 +1,6 @@
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.nio.Buffer;
 
 public abstract class Vehicle implements Movable {
 
@@ -18,8 +20,8 @@ public abstract class Vehicle implements Movable {
         this.color = color;
         this.xPosition = xPosition;
         this.yPosition = yPosition;
-        currentSpeed = 10;
-        directionAngle = 45;
+        currentSpeed = 0;
+        directionAngle = 0;
     }
 
     public int getNrDoors() {
