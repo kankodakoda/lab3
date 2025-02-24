@@ -21,7 +21,7 @@ public class CarController {
     // The frame that represents this instance View of the MVC pattern
     CarView frame;
     // A list of cars, modify if needed
-    ArrayList<Car> cars = new ArrayList<>();
+    ArrayList<Vehicle> cars = new ArrayList<>();
 
     //methods:
 
@@ -44,11 +44,10 @@ public class CarController {
     * */
     private class TimerListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
-            for (Car car : cars) {
+            for (Vehicle car : cars) {
                 car.move();
                 int x = (int) Math.round(car.getXPosition());
                 int y = (int) Math.round(car.getYPosition());
-                System.out.println(car.getCurrentSpeed());
                 if (isCarCollidingWithFrame(car)) {
                     car.turnLeft(180);
                 }
@@ -59,7 +58,7 @@ public class CarController {
             }
         }
 
-        private boolean isCarCollidingWithFrame(Car car) {
+        private boolean isCarCollidingWithFrame(Vehicle car) {
             return car.getXPosition() > frame.getWidth() - 115 ||
                     car.getXPosition() < 0 ||
                     car.getYPosition() > frame.getHeight() - 310 ||
