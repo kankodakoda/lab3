@@ -115,6 +115,7 @@ public class DrawPanel extends JPanel{
         super.paintComponent(g);
         for (GraphicsObject graObj : graphicsObjects) {
             g.drawImage(graObj.getBufferedImage(), graObj.getPosition().x, graObj.getPosition().y, null);
+            g.drawImage(volvoWorkshopImage, 300, 0, null);
         }
 
     }

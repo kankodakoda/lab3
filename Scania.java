@@ -51,4 +51,13 @@ public class Scania extends Truck {
 
     }
 
+    @Override
+    public void startEngine() {
+        if (angularLift.isRaised()) {
+            System.out.println("Can't drive while ramp is raised");
+        }
+        else
+            setCurrentSpeed(0.1);
+    }
+
 }

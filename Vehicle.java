@@ -53,11 +53,15 @@ public abstract class Vehicle implements Movable {
     }
 
     public void startEngine() {
-        currentSpeed = 0.1;
+        setCurrentSpeed(0.1);
     }
 
     public void stopEngine() {
-        currentSpeed = 0;
+        setCurrentSpeed(0);
+    }
+
+    public void setCurrentSpeed(double speed) {
+        currentSpeed = speed;
     }
 
     public double getXPosition() {

@@ -13,7 +13,7 @@ public class CarController {
     // member fields:
 
     // The delay (ms) corresponds to 20 updates a sec (hz)
-    private final int delay = 50;
+    private final int delay = 20;
     // The timer is started with a listener (see below) that executes the statements
     // each step between delays.
     private Timer timer = new Timer(delay, new TimerListener());
@@ -22,6 +22,7 @@ public class CarController {
     CarView frame;
     // A list of cars, modify if needed
     ArrayList<Vehicle> cars = new ArrayList<>();
+    Workshop<Volvo240> volvoWorkshop = new Workshop<>(10, 300, 0);
 
     //methods:
 
@@ -52,10 +53,25 @@ public class CarController {
                     car.turnLeft(180);
                 }
 
+                if (car instanceof Volvo240) {
+                    if (isVolvoWithinRange((Volvo240) car, volvoWorkshop) &&
+                        !volvoWorkshop.getVehicles().containsKey(car)) {
+                        volvoWorkshop.addVehicle((Volvo240) car);
+                        car.stopEngine();
+                    }
+                }
+
                 frame.drawPanel.moveit(x, y, car);
                 // repaint() calls the paintComponent method of the panel
                 frame.drawPanel.repaint();
             }
+        }
+
+        private boolean isVolvoWithinRange(Volvo240 volvo, Workshop<Volvo240> workshop) {
+            return volvo.getXPosition() > workshop.getXpos() - 10 &&
+                   volvo.getXPosition() < workshop.getXpos() + 10 &&
+                   volvo.getYPosition() > workshop.getYpos() - 10 &&
+                   volvo.getYPosition() < workshop.getYpos() + 10;
         }
 
         private boolean isCarCollidingWithFrame(Vehicle car) {
