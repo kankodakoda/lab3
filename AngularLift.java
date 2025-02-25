@@ -41,7 +41,7 @@ class AngularLift implements RampAbility {
         }
         else
             rampAngle -= amount;
-            if (rampAngle != 70)
+        if (rampAngle != 70)
                 isRaised = false;
     }
 

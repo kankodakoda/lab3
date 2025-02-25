@@ -1,23 +1,18 @@
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
-import java.nio.Buffer;
 import java.util.ArrayList;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
-// This panel represents the animated part of the view with the car images.
-
-public class DrawPanel extends JPanel{
+public class DrawPanel extends JPanel {
 
     private class GraphicsObject {
         private final BufferedImage bufferedImage;
         private final Vehicle car;
         private Point position;
 
-
-        public GraphicsObject(BufferedImage bufferedImage, Point position, Car car) {
+        public GraphicsObject(BufferedImage bufferedImage, Point position, Vehicle car) {
             this.bufferedImage = bufferedImage;
             this.position = position;
             this.car = car;
@@ -40,76 +35,52 @@ public class DrawPanel extends JPanel{
             return car;
         }
     }
-    ArrayList<GraphicsObject> graphicsObjects;
-    // Just a single image, TODO: Generalize
+
+    private ArrayList<GraphicsObject> graphicsObjects;
     BufferedImage volvoImage;
     BufferedImage saabImage;
     BufferedImage scaniaImage;
-    // To keep track of a single car's position
-    Point volvoPoint = new Point();
-    Point saabPoint = new Point();
-    Point scaniaPoint = new Point();
-
     BufferedImage volvoWorkshopImage;
-    Point volvoWorkshopPoint = new Point(300,300);
 
-    // TODO: Make this general for all cars
-
-    // Initializes the panel and reads the images
-    public DrawPanel(int x, int y) {
+    // Ny konstruktor som tar in listan med bilar
+    public DrawPanel(int width, int height, ArrayList<Vehicle> cars) {
         graphicsObjects = new ArrayList<>();
         this.setDoubleBuffered(true);
-        this.setPreferredSize(new Dimension(x, y));
+        this.setPreferredSize(new Dimension(width, height));
         this.setBackground(Color.green);
-        // Print an error message in case file is not found with a try/catch block
         try {
-
-            volvoImage = ImageIO.read(DrawPanel.class.getResourceAsStream("pics/Volvo240.jpg")); // 100 x 60
+            volvoImage = ImageIO.read(DrawPanel.class.getResourceAsStream("pics/Volvo240.jpg"));
             saabImage = ImageIO.read(DrawPanel.class.getResourceAsStream("pics/Saab95.jpg"));
-            volvoWorkshopImage = ImageIO.read(DrawPanel.class.getResourceAsStream("pics/VolvoBrand.jpg")); // 101 x 96
             scaniaImage = ImageIO.read(DrawPanel.class.getResourceAsStream("pics/Scania.jpg"));
+            volvoWorkshopImage=ImageIO.read(DrawPanel.class.getResourceAsStream("pics/VolvoBrand.jpg"));
 
-        } catch (IOException ex)
-        {
+        } catch (IOException ex) {
             ex.printStackTrace();
         }
-        graphicsObjects.add(new GraphicsObject(volvoImage, new Point(0,0), new Volvo240(0,0)));
-        graphicsObjects.add(new GraphicsObject(saabImage, new Point(0,100), new Saab95(0,100)));
-        graphicsObjects.add(new GraphicsObject(scaniaImage, new Point(0,200), new Scania(0,200)));
-
-    }
-
-    void moveit(int x, int y, Vehicle car){
-        for (GraphicsObject gObject : graphicsObjects) {
-            if (gObject.getCar().equals(car)) {
-                gObject.setPosition(new Point(x, y));  // Update position
-
-                // Debug: Print Image Positions
-                System.out.println("Updating " + car.getClass().getSimpleName() + " image to -> X: " + x + ", Y: " + y);
+        // Använd samma bilinstanser som finns i modellen
+        for (Vehicle car : cars) {
+            Point pos = new Point((int) car.getXPosition(), (int) car.getYPosition());
+            BufferedImage image = null;
+            if (car instanceof Volvo240) {
+                image = volvoImage;
+            } else if (car instanceof Saab95) {
+                image = saabImage;
+            } else if (car instanceof Scania) {
+                image = scaniaImage;
             }
+            graphicsObjects.add(new GraphicsObject(image, pos, car));
         }
     }
 
-
-
-    /*void moveit(int x, int y, Vehicle car){
-        volvoPoint.x = x;
-        volvoPoint.y = y;
-        // Trying to make move function general
+    public void moveit(int x, int y, Vehicle car) {
         for (GraphicsObject gObject : graphicsObjects) {
-            if (gObject.getCar() instanceof ) {
+            // Nu jämförs referenserna korrekt eftersom vi använder samma instanser
+            if (gObject.getCar().equals(car)) {
                 gObject.setPosition(new Point(x, y));
             }
-
-            //update position
         }
+    }
 
-    }*/
-
-
-
-    // This method is called each time the panel updates/refreshes/repaints itself
-    // TODO: Change to suit your needs.
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -117,7 +88,5 @@ public class DrawPanel extends JPanel{
             g.drawImage(graObj.getBufferedImage(), graObj.getPosition().x, graObj.getPosition().y, null);
             g.drawImage(volvoWorkshopImage, 300, 0, null);
         }
-
     }
 }
-

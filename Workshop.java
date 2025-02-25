@@ -37,11 +37,11 @@ public class Workshop<T extends Car> {
     }
 
     // Ta bort ett fordon från verkstaden
-    public T removeVehicle(T t) {
+    public T removeVehicle(T vehicle) {
         if (!vehicles.isEmpty()) {
-            T vehicle = vehicles.remove(t);
+            T t = vehicles.remove(vehicle);
             System.out.println(vehicle.toString() + " removed from the workshop.");
-            return vehicle;
+            return t;
         } else {
             System.out.println("No vehicles in the workshop.");
             return null;
@@ -59,6 +59,7 @@ public class Workshop<T extends Car> {
             }
         }
     }
+
 
     public int countVehicles(){
         return vehicles.size();
