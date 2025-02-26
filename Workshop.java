@@ -32,6 +32,7 @@ public class Workshop<T extends Car> {
             System.out.println("Workshop is full. " + vehicle);
         else {
             vehicles.put(vehicle, vehicle);
+            vehicle.setIsLoadedTrue();
             System.out.println(vehicle + " added to the workshop.");
         }
     }
@@ -40,7 +41,8 @@ public class Workshop<T extends Car> {
     public T removeVehicle(T vehicle) {
         if (!vehicles.isEmpty()) {
             T t = vehicles.remove(vehicle);
-            System.out.println(vehicle.toString() + " removed from the workshop.");
+            vehicle.setIsLoadedFalse();
+            System.out.println(vehicle + " removed from the workshop.");
             return t;
         } else {
             System.out.println("No vehicles in the workshop.");

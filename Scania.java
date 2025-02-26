@@ -56,6 +56,8 @@ public class Scania extends Truck {
         if (angularLift.isRaised()) {
             System.out.println("Can't drive while ramp is raised");
         }
+        else if (getCurrentSpeed() != 0)
+            System.out.println("Engine already started");
         else
             setCurrentSpeed(0.1);
     }

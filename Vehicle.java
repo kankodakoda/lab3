@@ -1,6 +1,7 @@
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.nio.Buffer;
+import java.sql.SQLOutput;
 
 public abstract class Vehicle implements Movable {
 
@@ -12,6 +13,7 @@ public abstract class Vehicle implements Movable {
     private double xPosition;
     private double yPosition;
     private double directionAngle;
+    private boolean isLoaded;
 
     public Vehicle(String modelName, int nrDoors, double enginePower, Color color, double xPosition, double yPosition) {
         this.modelName = modelName;
@@ -22,6 +24,7 @@ public abstract class Vehicle implements Movable {
         this.yPosition = yPosition;
         currentSpeed = 0;
         directionAngle = 0;
+        isLoaded = false;
     }
 
     public int getNrDoors() {
@@ -48,12 +51,29 @@ public abstract class Vehicle implements Movable {
         return directionAngle;
     }
 
+    public boolean isLoaded() {
+        return isLoaded;
+    }
+
+    public void setIsLoadedTrue() {
+        isLoaded = true;
+    }
+
+    public void setIsLoadedFalse() {
+        isLoaded = false;
+    }
+
     public void setColor(Color clr) {
         color = clr;
     }
 
     public void startEngine() {
-        setCurrentSpeed(0.1);
+        if (this.isLoaded())
+            System.out.println("Can't start engine while loaded in workshop");
+        else if (getCurrentSpeed() != 0)
+            System.out.println("Engine already started");
+        else
+            setCurrentSpeed(0.1);
     }
 
     public void stopEngine() {
@@ -79,7 +99,10 @@ public abstract class Vehicle implements Movable {
             System.out.println("Ogiltigt värde");
             return; // Stoppar metoden från att fortsätta
         }
-        incrementSpeed(amount);
+        else if (this.isLoaded())
+            System.out.println("Vehicle can't drive while loaded in workshop");
+        else
+            incrementSpeed(amount);
     }
 
     public void brake(double amount) {
