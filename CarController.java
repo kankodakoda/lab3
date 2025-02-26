@@ -16,36 +16,32 @@ public class CarController {
     private final int delay = 10;
     // The timer is started with a listener (see below) that executes the statements
     // each step between delays.
-    private Timer timer = new Timer(delay, new TimerListener());
-
+    Timer timer;
+    CarMovementHandler movementHandler;
+    CarInputHandler inputHandler;
+    CarUpdateManager updateManager;
     // The frame that represents this instance View of the MVC pattern
     CarView frame;
     // A list of cars, modify if needed
-    ArrayList<Vehicle> cars = new ArrayList<>();
-    Workshop<Volvo240> volvoWorkshop = new Workshop<>(10, 300, 0);
+    ArrayList<Vehicle> vehicles;
+    Workshop<Volvo240> volvoWorkshop;
 
-    //methods:
-
-    public static void main(String[] args) {
-        // Instance of this class
-        CarController cc = new CarController();
-
-        cc.cars.add(new Volvo240(0, 0));
-        cc.cars.add(new Saab95(0,100));
-        cc.cars.add(new Scania(0,200));
-
-        // Start a new view and send a reference of self
-        cc.frame = new CarView("CarSim 1.0", cc);
-        // Start the timer
-        cc.timer.start();
+    public CarController() {
+        timer = new Timer(delay, new TimerListener());
+        movementHandler = new CarMovementHandler();
+        inputHandler = new CarInputHandler();
+        updateManager = new CarUpdateManager();
+        vehicles = new ArrayList<>();
+        volvoWorkshop = new Workshop<>(10, 300, 0);
     }
+    //methods:
 
     /* Each step the TimerListener moves all the cars in the list and tells the
     * view to update its images. Change this method to your needs.
     * */
     private class TimerListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
-            for (Vehicle car : cars) {
+            for (Vehicle car : vehicles) {
                 car.move();
                 int x = (int) Math.round(car.getXPosition());
                 int y = (int) Math.round(car.getYPosition());
@@ -85,20 +81,20 @@ public class CarController {
     // Calls the gas method for each car once
     void gas(int amount) {
         double gas = ((double) amount) / 100;
-       for (Vehicle car : cars) {
+       for (Vehicle car : vehicles) {
            car.gas(gas);
        }
     }
 
     void brake(int amount) {
         double brake = ((double) amount) / 100;
-        for (Vehicle car : cars) {
+        for (Vehicle car : vehicles) {
             car.brake(brake);
         }
     }
 
     void setTurboOn() {
-        for (Vehicle car : cars) {
+        for (Vehicle car : vehicles) {
             if (car instanceof Saab95)
                 ((Saab95) car).setTurboOn();
         }
@@ -106,21 +102,21 @@ public class CarController {
     }
 
     void setTurboOff() {
-        for (Vehicle car : cars) {
+        for (Vehicle car : vehicles) {
             if (car instanceof Saab95)
                 ((Saab95) car).setTurboOff();
         }
     }
 
     void raiseRamp(double amount) {
-        for (Vehicle car : cars) {
+        for (Vehicle car : vehicles) {
             if (car instanceof Scania)
                 ((Scania) car).raiseRamp(amount);
         }
     }
 
     void lowerRamp(double amount) {
-        for (Vehicle car : cars) {
+        for (Vehicle car : vehicles) {
             if (car instanceof Scania) {
                 ((Scania) car).lowerRamp(amount);
             }
@@ -128,13 +124,13 @@ public class CarController {
     }
 
     void startAllCars() {
-        for (Vehicle car : cars) {
+        for (Vehicle car : vehicles) {
             car.startEngine();
         }
     }
 
     void stopAllCars() {
-        for (Vehicle car : cars) {
+        for (Vehicle car : vehicles) {
             car.stopEngine();
         }
     }

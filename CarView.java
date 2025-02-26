@@ -52,7 +52,7 @@ public class CarView extends JFrame{
         this.setTitle(title);
         this.setPreferredSize(new Dimension(X,Y));
         this.setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
-        drawPanel = new DrawPanel(X, Y-240, carC.cars);
+        drawPanel = new DrawPanel(X, Y-240, carC.vehicles);
         this.add(drawPanel);
 
         SpinnerModel spinnerModel =

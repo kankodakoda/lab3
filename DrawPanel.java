@@ -7,15 +7,15 @@ import javax.swing.*;
 
 public class DrawPanel extends JPanel {
 
-    private class GraphicsObject {
+    private static class GraphicsObject {
         private final BufferedImage bufferedImage;
-        private final Vehicle car;
-        private Point position;
+        private final Vehicle vehicle;
+        private final Point position;
 
-        public GraphicsObject(BufferedImage bufferedImage, Point position, Vehicle car) {
+        public GraphicsObject(BufferedImage bufferedImage, Point position, Vehicle vehicle) {
             this.bufferedImage = bufferedImage;
             this.position = position;
-            this.car = car;
+            this.vehicle = vehicle;
         }
 
         public BufferedImage getBufferedImage() {
@@ -31,8 +31,8 @@ public class DrawPanel extends JPanel {
             position.y = newPosition.y;
         }
 
-        public Vehicle getCar() {
-            return car;
+        public Vehicle getVehicle() {
+            return vehicle;
         }
     }
 
@@ -43,7 +43,7 @@ public class DrawPanel extends JPanel {
     BufferedImage volvoWorkshopImage;
 
     // Ny konstruktor som tar in listan med bilar
-    public DrawPanel(int width, int height, ArrayList<Vehicle> cars) {
+    public DrawPanel(int width, int height, ArrayList<Vehicle> vehicles) {
         graphicsObjects = new ArrayList<>();
         this.setDoubleBuffered(true);
         this.setPreferredSize(new Dimension(width, height));
@@ -58,24 +58,24 @@ public class DrawPanel extends JPanel {
             ex.printStackTrace();
         }
         // Använd samma bilinstanser som finns i modellen
-        for (Vehicle car : cars) {
-            Point pos = new Point((int) car.getXPosition(), (int) car.getYPosition());
+        for (Vehicle vehicle : vehicles) {
+            Point pos = new Point((int) vehicle.getXPosition(), (int) vehicle.getYPosition());
             BufferedImage image = null;
-            if (car instanceof Volvo240) {
+            if (vehicle instanceof Volvo240) {
                 image = volvoImage;
-            } else if (car instanceof Saab95) {
+            } else if (vehicle instanceof Saab95) {
                 image = saabImage;
-            } else if (car instanceof Scania) {
+            } else if (vehicle instanceof Scania) {
                 image = scaniaImage;
             }
-            graphicsObjects.add(new GraphicsObject(image, pos, car));
+            graphicsObjects.add(new GraphicsObject(image, pos, vehicle));
         }
     }
 
-    public void moveit(int x, int y, Vehicle car) {
+    public void moveit(int x, int y, Vehicle vehicle) {
         for (GraphicsObject gObject : graphicsObjects) {
             // Nu jämförs referenserna korrekt eftersom vi använder samma instanser
-            if (gObject.getCar().equals(car)) {
+            if (gObject.getVehicle().equals(vehicle)) {
                 gObject.setPosition(new Point(x, y));
             }
         }
