@@ -12,8 +12,8 @@ import java.util.ArrayList;
 public class CarController {
     // member fields:
 
-    // The delay (ms) corresponds to 20 updates a sec (hz)
-    private final int delay = 10;
+    // The delay (ms) corresponds to 10 updates a sec (hz)
+    private final int delay = 2;
     // The timer is started with a listener (see below) that executes the statements
     // each step between delays.
     Timer timer;
@@ -22,16 +22,15 @@ public class CarController {
     CarUpdateManager updateManager;
     // The frame that represents this instance View of the MVC pattern
     CarView frame;
-    // A list of cars, modify if needed
     ArrayList<Vehicle> vehicles;
     Workshop<Volvo240> volvoWorkshop;
 
     public CarController() {
+        vehicles = new ArrayList<>();
         timer = new Timer(delay, new TimerListener());
         movementHandler = new CarMovementHandler();
-        inputHandler = new CarInputHandler();
+        inputHandler = new CarInputHandler(vehicles);
         updateManager = new CarUpdateManager();
-        vehicles = new ArrayList<>();
         volvoWorkshop = new Workshop<>(10, 300, 0);
     }
     //methods:
@@ -41,23 +40,22 @@ public class CarController {
     * */
     private class TimerListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
-            for (Vehicle car : vehicles) {
-                car.move();
-                int x = (int) Math.round(car.getXPosition());
-                int y = (int) Math.round(car.getYPosition());
-                if (isCarCollidingWithFrame(car)) {
-                    car.turnLeft(180);
+            for (Vehicle vehicle : vehicles) {
+                vehicle.move();
+                int x = (int) Math.round(vehicle.getXPosition());
+                int y = (int) Math.round(vehicle.getYPosition());
+                if (isCarCollidingWithFrame(vehicle)) {
+                    vehicle.turnLeft(180);
                 }
 
-                if (car instanceof Volvo240) {
-                    if (isVolvoWithinRange((Volvo240) car, volvoWorkshop) &&
-                        !volvoWorkshop.getVehicles().containsKey(car)) {
-                        volvoWorkshop.addVehicle((Volvo240) car);
-                        car.stopEngine();
+                if (vehicle instanceof Volvo240) {
+                    if (isVolvoWithinRange((Volvo240) vehicle, volvoWorkshop) &&
+                        !volvoWorkshop.getVehicles().containsKey(vehicle)) {
+                        volvoWorkshop.addVehicle((Volvo240) vehicle);
+                        vehicle.stopEngine();
                     }
                 }
-
-                frame.drawPanel.moveit(x, y, car);
+                frame.drawPanel.moveit(x, y, vehicle);
                 // repaint() calls the paintComponent method of the panel
                 frame.drawPanel.repaint();
             }
@@ -79,60 +77,6 @@ public class CarController {
     }
 
     // Calls the gas method for each car once
-    void gas(int amount) {
-        double gas = ((double) amount) / 100;
-       for (Vehicle car : vehicles) {
-           car.gas(gas);
-       }
-    }
 
-    void brake(int amount) {
-        double brake = ((double) amount) / 100;
-        for (Vehicle car : vehicles) {
-            car.brake(brake);
-        }
-    }
-
-    void setTurboOn() {
-        for (Vehicle car : vehicles) {
-            if (car instanceof Saab95)
-                ((Saab95) car).setTurboOn();
-        }
-
-    }
-
-    void setTurboOff() {
-        for (Vehicle car : vehicles) {
-            if (car instanceof Saab95)
-                ((Saab95) car).setTurboOff();
-        }
-    }
-
-    void raiseRamp(double amount) {
-        for (Vehicle car : vehicles) {
-            if (car instanceof Scania)
-                ((Scania) car).raiseRamp(amount);
-        }
-    }
-
-    void lowerRamp(double amount) {
-        for (Vehicle car : vehicles) {
-            if (car instanceof Scania) {
-                ((Scania) car).lowerRamp(amount);
-            }
-        }
-    }
-
-    void startAllCars() {
-        for (Vehicle car : vehicles) {
-            car.startEngine();
-        }
-    }
-
-    void stopAllCars() {
-        for (Vehicle car : vehicles) {
-            car.stopEngine();
-        }
-    }
 
 }

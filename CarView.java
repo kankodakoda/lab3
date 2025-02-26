@@ -102,41 +102,41 @@ public class CarView extends JFrame{
         gasButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                carC.gas(spinnerValue);
+                carC.inputHandler.gas(spinnerValue);
             }
         });
         brakeButton.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e) { carC.brake(spinnerValue);}
+            public void actionPerformed(ActionEvent e) { carC.inputHandler.brake(spinnerValue);}
         });
         turboOnButton.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e) {carC.setTurboOn();}
+            public void actionPerformed(ActionEvent e) {carC.inputHandler.setTurboOn();}
         });
 
         turboOffButton.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e) {carC.setTurboOff();}
+            public void actionPerformed(ActionEvent e) {carC.inputHandler.setTurboOff();}
         });
 
         liftBedButton.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e) {carC.raiseRamp(spinnerValue);}
+            public void actionPerformed(ActionEvent e) {carC.inputHandler.raiseRamp(spinnerValue);}
         });
 
         lowerBedButton.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e) {carC.lowerRamp(spinnerValue);}
+            public void actionPerformed(ActionEvent e) {carC.inputHandler.lowerRamp(spinnerValue);}
         });
 
         startButton.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e) {carC.startAllCars();}
+            public void actionPerformed(ActionEvent e) {carC.inputHandler.startAllCars();}
         });
 
         stopButton.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e) {carC.stopAllCars();}
+            public void actionPerformed(ActionEvent e) {carC.inputHandler.stopAllCars();}
         });
 
 
