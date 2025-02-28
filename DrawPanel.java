@@ -1,13 +1,14 @@
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
 public class DrawPanel extends JPanel {
 
-    private static class GraphicsObject {
+    /*private static class GraphicsObject {
         private final BufferedImage bufferedImage;
         private final Vehicle vehicle;
         private final Point position;
@@ -34,9 +35,9 @@ public class DrawPanel extends JPanel {
         public Vehicle getVehicle() {
             return vehicle;
         }
-    }
-
-    private ArrayList<GraphicsObject> graphicsObjects;
+    }*/
+    ArrayList<Vehicle> vehicles;
+    //private ArrayList<GraphicsObject> graphicsObjects;
     BufferedImage volvoImage;
     BufferedImage saabImage;
     BufferedImage scaniaImage;
@@ -44,7 +45,7 @@ public class DrawPanel extends JPanel {
 
     // Ny konstruktor som tar in listan med bilar
     public DrawPanel(int width, int height, ArrayList<Vehicle> vehicles) {
-        graphicsObjects = new ArrayList<>();
+        this.vehicles = vehicles;
         this.setDoubleBuffered(true);
         this.setPreferredSize(new Dimension(width, height));
         this.setBackground(Color.green);
@@ -58,7 +59,7 @@ public class DrawPanel extends JPanel {
             ex.printStackTrace();
         }
         // Använd samma bilinstanser som finns i modellen
-        for (Vehicle vehicle : vehicles) {
+        /*for (Vehicle vehicle : vehicles) {
             Point pos = new Point((int) vehicle.getXPosition(), (int) vehicle.getYPosition());
             BufferedImage image = null;
             if (vehicle instanceof Volvo240) {
@@ -68,25 +69,42 @@ public class DrawPanel extends JPanel {
             } else if (vehicle instanceof Scania) {
                 image = scaniaImage;
             }
-            graphicsObjects.add(new GraphicsObject(image, pos, vehicle));
-        }
+            //graphicsObjects.add(new GraphicsObject(image, pos, vehicle));
+        }*/
     }
 
-    public void moveit(int x, int y, Vehicle vehicle) {
+    /*public void moveit(int x, int y, Vehicle vehicle) {
         for (GraphicsObject gObject : graphicsObjects) {
             // Nu jämförs referenserna korrekt eftersom vi använder samma instanser
             if (gObject.getVehicle().equals(vehicle)) {
                 gObject.setPosition(new Point(x, y));
             }
         }
-    }
+    }*/
 
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        for (GraphicsObject graObj : graphicsObjects) {
-            g.drawImage(graObj.getBufferedImage(), graObj.getPosition().x, graObj.getPosition().y, null);
+
+
+
+        for (Vehicle vehicle : vehicles) {
             g.drawImage(volvoWorkshopImage, 300, 0, null);
+            BufferedImage vehicleImage = getVehicleImage(vehicle);
+            int x = (int) vehicle.getXPosition();
+            int y = (int) vehicle.getYPosition();
+            g.drawImage(vehicleImage, x, y, null);
         }
+    }
+
+    private BufferedImage getVehicleImage(Vehicle vehicle) {
+        if (vehicle instanceof Volvo240) return volvoImage;
+        if (vehicle instanceof Saab95) return saabImage;
+        if (vehicle instanceof Scania) return scaniaImage;
+        return null;
+    }
+
+    public void updateGraphics() {
+        repaint();
     }
 }

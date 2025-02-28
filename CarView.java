@@ -14,8 +14,8 @@ import java.awt.event.ActionListener;
  **/
 
 public class CarView extends JFrame{
-    private static final int X = 800;
-    private static final int Y = 800;
+    private final int X;
+    private final int Y;
 
     // The controller member
     CarController carC;
@@ -40,7 +40,9 @@ public class CarView extends JFrame{
     JButton stopButton = new JButton("Stop all cars");
 
     // Constructor
-    public CarView(String framename, CarController cc){
+    public CarView(String framename, CarController cc, int X, int Y){
+        this.X = X;
+        this.Y = Y;
         this.carC = cc;
         initComponents(framename);
     }
@@ -101,9 +103,7 @@ public class CarView extends JFrame{
         // TODO: Create more for each component as necessary
         gasButton.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e) {
-                carC.inputHandler.gas(spinnerValue);
-            }
+            public void actionPerformed(ActionEvent e) { carC.inputHandler.gas(spinnerValue); }
         });
         brakeButton.addActionListener(new ActionListener() {
             @Override
@@ -138,10 +138,6 @@ public class CarView extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {carC.inputHandler.stopAllCars();}
         });
-
-
-
-
 
         // Make the frame pack all it's components by respecting the sizes if possible.
         this.pack();

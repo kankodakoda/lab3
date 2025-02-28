@@ -6,11 +6,9 @@ public class Main {
         cc.vehicles.add(new Saab95(0,100));
         cc.vehicles.add(new Scania(0,200));
 
-        System.out.println(cc.inputHandler.getSize());
-
         // Start a new view and send a reference of self
-        cc.frame = new CarView("CarSim 1.0", cc);
+        //cc.frame = new CarView("CarSim 1.0", cc);
         // Start the timer
-        cc.timer.start();
+        cc.updateManager.start();
     }
 }
