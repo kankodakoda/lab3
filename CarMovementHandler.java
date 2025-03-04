@@ -18,21 +18,6 @@ public class CarMovementHandler {
         notifyObservers();
     }
 
-    public void handleFrameCollision() {
-        for (Vehicle vehicle : vehicles) {
-            if (isCarCollidingWithFrame(vehicle)) {
-                vehicle.turnLeft(180);
-            }
-        }
-    }
-
-    private boolean isCarCollidingWithFrame(Vehicle car) {
-        return car.getXPosition() > frameWidth - 115 ||
-                car.getXPosition() < 0 ||
-                car.getYPosition() > frameHeight - 310 ||
-                car.getYPosition() < 0;
-    }
-
     public void gas(double amount) {
         for (Vehicle vehicle : vehicles) {
             vehicle.gas(amount);

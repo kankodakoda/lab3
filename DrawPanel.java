@@ -8,13 +8,14 @@ import javax.swing.*;
 public class DrawPanel extends JPanel implements VehicleObserver {
 
     ArrayList<Vehicle> vehicles;
+    CarMovementHandler movementHandler;
     BufferedImage volvoImage;
     BufferedImage saabImage;
     BufferedImage scaniaImage;
     BufferedImage volvoWorkshopImage;
 
     // Ny konstruktor som tar in listan med bilar
-    public DrawPanel(int width, int height, ArrayList<Vehicle> vehicles) {
+    public DrawPanel(int width, int height, ArrayList<Vehicle> vehicles, CarMovementHandler movementHandler) {
         this.vehicles = vehicles;
         this.setDoubleBuffered(true);
         this.setPreferredSize(new Dimension(width, height));
@@ -54,12 +55,8 @@ public class DrawPanel extends JPanel implements VehicleObserver {
         return null;
     }
 
-    public void updateGraphics() {
-        repaint();
-    }
-
     @Override
     public void update() {
-
+        repaint();
     }
 }

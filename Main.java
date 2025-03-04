@@ -6,8 +6,6 @@ public class Main {
         cc.vehicles.add(VehicleFactory.createVehicle(VehicleType.SAAB, 0, 100));
         cc.vehicles.add(VehicleFactory.createVehicle(VehicleType.SCANIA, 0, 200));
 
-        // Start a new view and send a reference of self
-        //cc.frame = new CarView("CarSim 1.0", cc);
         // Start the timer
         cc.updateManager.start();
     }

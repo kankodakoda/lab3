@@ -14,6 +14,7 @@ public class CarController {
     CarInputHandler inputHandler;
     CarUpdateManager updateManager;
     LoadingHandler loadingHandler;
+    CollisionHandler collisionHandler;
     // The frame that represents this instance View of the MVC pattern
     CarView frame;
     ArrayList<Vehicle> vehicles;
@@ -21,11 +22,12 @@ public class CarController {
 
     public CarController() {
         vehicles = new ArrayList<>();
-        frame = new CarView("CarSim 1.0", this, frameWidth, frameHeight);
         movementHandler = new CarMovementHandler(vehicles, frameWidth, frameHeight);
+        frame = new CarView("CarSim 1.0", this, frameWidth, frameHeight, movementHandler);
         inputHandler = new CarInputHandler(movementHandler);
         loadingHandler = new LoadingHandler(vehicles, volvoWorkshop);
-        updateManager = new CarUpdateManager(movementHandler, frame.drawPanel, loadingHandler);
+        collisionHandler = new CollisionHandler(frame.drawPanel, vehicles);
+        updateManager = new CarUpdateManager(movementHandler, frame.drawPanel, loadingHandler, collisionHandler);
         volvoWorkshop = new Workshop<>(10, 300, 0);
     }
 }
