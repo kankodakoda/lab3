@@ -15,6 +15,7 @@ public class CarMovementHandler {
         for (Vehicle vehicle : vehicles) {
             vehicle.move();
         }
+        notifyObservers();
     }
 
     public void handleFrameCollision() {
