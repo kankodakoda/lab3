@@ -2,23 +2,23 @@ import java.awt.*;
 
 public class Saab95 extends Car {
 
-    private boolean turboOn;
+    private TurboState turboState;
 
     public Saab95(double xpos, double ypos) {
         super("Saab95", 2, 125, Color.red, xpos, ypos);
-        turboOn = false;
+        this.turboState = new TurboOffState();
     }
 
-    public boolean getTurboOn() {
-        return turboOn;
+    public void setTurboState(TurboState state) {
+        this.turboState = state;
     }
 
-    public void setTurboOn() {
-        turboOn = true;
-        System.out.println("Turbo is turned on");}
+    public void activateTurbo() {
+        turboState.activateTurbo(this);
+    }
 
-    public void setTurboOff() {
-        turboOn = false;
+    public void deactivateTurbo() {
+        turboState.deactivateTurbo(this);
     }
 
     @Override

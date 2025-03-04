@@ -47,7 +47,7 @@ public class CarMovementHandler {
     void setTurboOn() {
         for (Vehicle vehicle : vehicles) {
             if (vehicle instanceof Saab95)
-                ((Saab95) vehicle).setTurboOn();
+                ((Saab95) vehicle).activateTurbo();
         }
 
     }
