@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 
-public class CarMovementHandler {
+public class CarMovementHandler extends VehicleObservable {
     ArrayList<Vehicle> vehicles;
     int frameWidth;
     int frameHeight;
@@ -41,7 +41,7 @@ public class CarMovementHandler {
     void setTurboOff() {
         for (Vehicle vehicle : vehicles) {
             if (vehicle instanceof Saab95)
-                ((Saab95) vehicle).setTurboOff();
+                ((Saab95) vehicle).deactivateTurbo();
         }
     }
 

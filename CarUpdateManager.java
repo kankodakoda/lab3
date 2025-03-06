@@ -9,7 +9,7 @@ public class CarUpdateManager {
     private final DrawPanel drawPanel; // Interface for DrawPanel
     private final LoadingHandler loadingHandler;
 
-    public CarUpdateManager(CarMovementHandler movementHandler, DrawPanel drawPanel, LoadingHandler loadingHandler) {
+    public CarUpdateManager(CarMovementHandler movementHandler, DrawPanel drawPanel, LoadingHandler loadingHandler, CollisionHandler collisionHandler) {
         this.movementHandler = movementHandler;
         this.drawPanel = drawPanel;
         this.timer = new Timer(5, new TimerListener());

@@ -17,6 +17,7 @@ public class DrawPanel extends JPanel implements VehicleObserver {
     // Ny konstruktor som tar in listan med bilar
     public DrawPanel(int width, int height, ArrayList<Vehicle> vehicles, CarMovementHandler movementHandler) {
         this.vehicles = vehicles;
+        movementHandler.addObserver(this);
         this.setDoubleBuffered(true);
         this.setPreferredSize(new Dimension(width, height));
         this.setBackground(Color.green);
