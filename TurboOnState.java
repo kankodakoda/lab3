@@ -6,6 +6,7 @@ public class TurboOnState implements TurboState {
 
     @Override
     public void deactivateTurbo(Saab95 saab) {
+        System.out.println("Turbo deactivated");
         saab.setTurboState(new TurboOffState());
     }
 
