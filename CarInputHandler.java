@@ -16,7 +16,6 @@ public class CarInputHandler {
     void brake(int amount) {
         double brake = ((double) amount) / 100;
         movementHandler.brake(brake);
-
     }
 
     void setTurboOn() {
@@ -41,5 +40,26 @@ public class CarInputHandler {
 
     void stopAllCars() {
         movementHandler.stopAllCars();
+    }
+
+    void addVehicle(String vehicle) {
+        switch (vehicle) {
+            case "Volvo":
+                System.out.println("Volvo");
+            case "Saab":
+                System.out.println("Saab");
+            case "Scania":
+                System.out.println("Scania");
+            case "Mercedes":
+                System.out.println("Mercedes");
+            case "Random":
+                System.out.println("Random");
+            default:
+                System.out.println("Invalid choice");
+        }
+    }
+    void removeVehicle(String vehicle);
+
+
     }
 }

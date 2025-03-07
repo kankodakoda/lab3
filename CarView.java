@@ -30,9 +30,10 @@ public class CarView extends JFrame{
     JSpinner gasSpinner = new JSpinner();
     int spinnerValue = 0;
     JLabel gasLabel = new JLabel("Amount of gas");
+    JLabel vehicleLabel = new JLabel("Vehicle choice");
 
-    String[] vehicleTypes = {"Volvo", "Saab", "Scania", "Mercedes", "Random"};
-    JComboBox vehicleChoices = new JComboBox<>(vehicleTypes);
+    VehicleType[] vehicleTypes = {VehicleType.VOLVO, VehicleType., "Scania", "Mercedes", "Random"};
+    JComboBox<String> vehicleChoices = new JComboBox<>(vehicleTypes);
 
     JButton gasButton = new JButton("Gas");
     JButton brakeButton = new JButton("Brake");
@@ -45,6 +46,8 @@ public class CarView extends JFrame{
 
     JButton startButton = new JButton("Start all cars");
     JButton stopButton = new JButton("Stop all cars");
+
+    String selected = vehicleTypes[0];
 
     // Constructor
     public CarView(String framename, CarController cc, int X, int Y, CarMovementHandler movementHandler){
@@ -77,9 +80,16 @@ public class CarView extends JFrame{
             }
         });
 
-        gasPanel.setLayout(new BorderLayout());
-        gasPanel.add(gasLabel, BorderLayout.PAGE_START);
-        gasPanel.add(gasSpinner, BorderLayout.PAGE_END);
+        gasPanel.setLayout(new BoxLayout(gasPanel, BoxLayout.Y_AXIS)); // Stack elements vertically
+        gasLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        gasSpinner.setAlignmentX(Component.CENTER_ALIGNMENT);
+        vehicleLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        vehicleChoices.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        gasPanel.add(gasLabel);      // Label on top
+        gasPanel.add(gasSpinner);    // Spinner below label
+        gasPanel.add(vehicleLabel);  // Label on top
+        gasPanel.add(vehicleChoices); // ComboBox at the bottom
 
         this.add(gasPanel);
 
@@ -146,10 +156,25 @@ public class CarView extends JFrame{
         vehicleChoices.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String selected = (String) vehicleChoices.getSelectedItem();
-                JOptionPane.showMessageDialog(CarView.this, "You selected: " + selected);
+                selected = (String) vehicleChoices.getSelectedItem();
+                System.out.println("You selected: " + selected);
             }
         });
+
+        addCarButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                carC.inputHandler.addVehicle(selected);
+            }
+        });
+
+        removeCarButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                carC.inputHandler.removeVehicle();
+            }
+        });
+
         // Make the frame pack all it's components by respecting the sizes if possible.
         this.pack();
 
