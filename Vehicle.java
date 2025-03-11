@@ -1,15 +1,12 @@
 import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.nio.Buffer;
-import java.sql.SQLOutput;
 
 public abstract class Vehicle implements Movable {
 
-    private int nrDoors; // Number of doors on the car
-    private double enginePower; // Engine power of the car
+    private final int nrDoors; // Number of doors on the car
+    private final double enginePower; // Engine power of the car
     private double currentSpeed; // The current speed of the car
     private Color color; // Color of the car
-    private String modelName; // The car model name
+    private final String modelName; // The car model name
     private double xPosition;
     private double yPosition;
     private double directionAngle;

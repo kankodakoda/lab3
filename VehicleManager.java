@@ -2,7 +2,6 @@ import java.util.ArrayList;
 
 public class VehicleManager {
     ArrayList<Vehicle> vehicles;
-    private int maxVehicleCount = 5;
     private int currentYposition = 0;
     final Workshop<Volvo240> volvoWorkshop;
 
@@ -12,6 +11,7 @@ public class VehicleManager {
     }
 
     public void addVehicle (VehicleType vehicleType) {
+        int maxVehicleCount = 5;
         if (vehicles.size() < maxVehicleCount) {
             Vehicle vehicle = VehicleFactory.createVehicle(vehicleType, currentYposition);
             vehicles.add(vehicle);
