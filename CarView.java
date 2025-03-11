@@ -29,7 +29,7 @@ public class CarView extends JFrame{
     JPanel gasPanel = new JPanel();
     JSpinner gasSpinner = new JSpinner();
     int spinnerValue = 0;
-    JLabel gasLabel = new JLabel("Amount of gas");
+    JLabel gasLabel = new JLabel("Amount");
     JLabel vehicleLabel = new JLabel("Vehicle choice");
 
     VehicleType[] vehicleTypes = {VehicleType.VOLVO,
