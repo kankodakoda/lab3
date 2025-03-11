@@ -92,10 +92,8 @@ public abstract class Vehicle implements Movable {
     public abstract double speedFactor();
 
     public void gas(double amount) {
-        if (amount < 0 || amount > 1) {
+        if (amount < 0 || amount > 1)
             System.out.println("Ogiltigt värde");
-            return; // Stoppar metoden från att fortsätta
-        }
         else if (this.isLoaded())
             System.out.println("Vehicle can't drive while loaded in workshop");
         else
