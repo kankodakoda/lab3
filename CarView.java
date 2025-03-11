@@ -32,8 +32,13 @@ public class CarView extends JFrame{
     JLabel gasLabel = new JLabel("Amount of gas");
     JLabel vehicleLabel = new JLabel("Vehicle choice");
 
-    VehicleType[] vehicleTypes = {VehicleType.VOLVO, VehicleType., "Scania", "Mercedes", "Random"};
-    JComboBox<String> vehicleChoices = new JComboBox<>(vehicleTypes);
+    VehicleType[] vehicleTypes = {VehicleType.VOLVO,
+                                  VehicleType.SAAB,
+                                  VehicleType.SCANIA,
+                                  VehicleType.MERCEDES,
+                                  VehicleType.RANDOM};
+    JComboBox<VehicleType> vehicleChoices = new JComboBox<>(vehicleTypes);
+    VehicleType selected = vehicleTypes[0];
 
     JButton gasButton = new JButton("Gas");
     JButton brakeButton = new JButton("Brake");
@@ -47,7 +52,6 @@ public class CarView extends JFrame{
     JButton startButton = new JButton("Start all cars");
     JButton stopButton = new JButton("Stop all cars");
 
-    String selected = vehicleTypes[0];
 
     // Constructor
     public CarView(String framename, CarController cc, int X, int Y, CarMovementHandler movementHandler){
@@ -109,7 +113,7 @@ public class CarView extends JFrame{
         controlPanel.add(stopButton);
         controlPanel.add(removeCarButton);
 
-        controlPanel.setPreferredSize(new Dimension(X-100, 200));
+        controlPanel.setPreferredSize(new Dimension(X-150, 200));
         this.add(controlPanel);
         controlPanel.setBackground(Color.CYAN);
 
@@ -156,7 +160,7 @@ public class CarView extends JFrame{
         vehicleChoices.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                selected = (String) vehicleChoices.getSelectedItem();
+                selected = (VehicleType) vehicleChoices.getSelectedItem();
                 System.out.println("You selected: " + selected);
             }
         });

@@ -1,3 +1,3 @@
 public enum VehicleType {
-    VOLVO, SAAB, SCANIA, MERCEDES
+    VOLVO, SAAB, SCANIA, MERCEDES, RANDOM
 }

@@ -8,10 +8,10 @@ import javax.swing.*;
 public class DrawPanel extends JPanel implements VehicleObserver {
 
     ArrayList<Vehicle> vehicles;
-    CarMovementHandler movementHandler;
     BufferedImage volvoImage;
     BufferedImage saabImage;
     BufferedImage scaniaImage;
+    BufferedImage mercedesImage;
     BufferedImage volvoWorkshopImage;
 
     // Ny konstruktor som tar in listan med bilar
@@ -29,6 +29,7 @@ public class DrawPanel extends JPanel implements VehicleObserver {
             volvoImage = ImageIO.read(DrawPanel.class.getResourceAsStream("pics/Volvo240.jpg"));
             saabImage = ImageIO.read(DrawPanel.class.getResourceAsStream("pics/Saab95.jpg"));
             scaniaImage = ImageIO.read(DrawPanel.class.getResourceAsStream("pics/Scania.jpg"));
+            mercedesImage = ImageIO.read(DrawPanel.class.getResourceAsStream("pics/Mercedes.jpg"));
             volvoWorkshopImage=ImageIO.read(DrawPanel.class.getResourceAsStream("pics/VolvoBrand.jpg"));
 
         } catch (IOException ex) {
@@ -41,18 +42,19 @@ public class DrawPanel extends JPanel implements VehicleObserver {
         super.paintComponent(g);
 
         for (Vehicle vehicle : vehicles) {
-            g.drawImage(volvoWorkshopImage, 300, 0, null);
             BufferedImage vehicleImage = getVehicleImage(vehicle);
             int x = (int) vehicle.getXPosition();
             int y = (int) vehicle.getYPosition();
             g.drawImage(vehicleImage, x, y, null);
         }
+        g.drawImage(volvoWorkshopImage, 400, 0, null);
     }
 
     private BufferedImage getVehicleImage(Vehicle vehicle) {
         if (vehicle instanceof Volvo240) return volvoImage;
         if (vehicle instanceof Saab95) return saabImage;
         if (vehicle instanceof Scania) return scaniaImage;
+        if (vehicle instanceof Mercedes) return mercedesImage;
         return null;
     }
 

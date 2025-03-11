@@ -3,9 +3,11 @@ import java.util.ArrayList;
 
 public class CarInputHandler {
     CarMovementHandler movementHandler;
+    VehicleManager vehicleManager;
 
-    public CarInputHandler(CarMovementHandler movementHandler) {
+    public CarInputHandler(CarMovementHandler movementHandler, VehicleManager vehicleManager) {
         this.movementHandler = movementHandler;
+        this.vehicleManager = vehicleManager;
     }
 
     void gas(int amount) {
@@ -42,24 +44,10 @@ public class CarInputHandler {
         movementHandler.stopAllCars();
     }
 
-    void addVehicle(String vehicle) {
-        switch (vehicle) {
-            case "Volvo":
-                System.out.println("Volvo");
-            case "Saab":
-                System.out.println("Saab");
-            case "Scania":
-                System.out.println("Scania");
-            case "Mercedes":
-                System.out.println("Mercedes");
-            case "Random":
-                System.out.println("Random");
-            default:
-                System.out.println("Invalid choice");
-        }
+    void addVehicle(VehicleType vehicle) {
+        vehicleManager.addVehicle(vehicle);
     }
-    void removeVehicle(String vehicle);
-
-
+    void removeVehicle() {
+        vehicleManager.removeVehicle();
     }
 }
