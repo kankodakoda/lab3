@@ -27,4 +27,5 @@ public class CarController {
         collisionHandler = new CollisionHandler(frame.drawPanel, vehicles);
         updateManager = new CarUpdateManager(movementHandler, frame.drawPanel, loadingHandler, collisionHandler);
     }
+
 }
