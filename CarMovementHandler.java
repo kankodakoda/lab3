@@ -12,9 +12,8 @@ public class CarMovementHandler extends VehicleObservable {
     }
 
     public void moveCars() {
-        for (Vehicle vehicle : vehicles) {
+        for (Vehicle vehicle : vehicles)
             vehicle.move();
-        }
         notifyObservers();
     }
 

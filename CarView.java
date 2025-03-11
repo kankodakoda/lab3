@@ -1,17 +1,5 @@
 import javax.swing.*;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
-/**
- * This class represents the full view of the MVC pattern of your car simulator.
- * It initializes with being center on the screen and attaching it's controller in it's state.
- * It communicates with the Controller by calling methods of it when an action fires of in
- * each of it's components.
- * TODO: Write more actionListeners and wire the rest of the buttons
- **/
 
 public class CarView extends JFrame{
     private final int X;
@@ -62,8 +50,6 @@ public class CarView extends JFrame{
         initComponents(framename);
     }
 
-    // Sets everything in place and fits everything
-    // TODO: Take a good look and make sure you understand how these methods and components work
     private void initComponents(String title) {
 
         this.setTitle(title);
@@ -72,31 +58,25 @@ public class CarView extends JFrame{
         drawPanel = new DrawPanel(X, Y-240, carC.vehicles, movementHandler);
         this.add(drawPanel);
 
-        SpinnerModel spinnerModel =
-                new SpinnerNumberModel(0, //initial value
-                        0, //min
-                        100, //max
-                        1);//step
+        SpinnerModel spinnerModel = new SpinnerNumberModel(0, 0, 100, 1);
         gasSpinner = new JSpinner(spinnerModel);
-        gasSpinner.addChangeListener(new ChangeListener() {
-            public void stateChanged(ChangeEvent e) {
-                spinnerValue = (int) ((JSpinner)e.getSource()).getValue();
-            }
-        });
+        gasSpinner.addChangeListener(e -> spinnerValue = (int) ((JSpinner)e.getSource()).getValue());
 
+        // Set layout for value panel
         gasPanel.setLayout(new BoxLayout(gasPanel, BoxLayout.Y_AXIS)); // Stack elements vertically
         gasLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         gasSpinner.setAlignmentX(Component.CENTER_ALIGNMENT);
         vehicleLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         vehicleChoices.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        gasPanel.add(gasLabel);      // Label on top
-        gasPanel.add(gasSpinner);    // Spinner below label
-        gasPanel.add(vehicleLabel);  // Label on top
+        gasPanel.add(gasLabel);       // Label on top
+        gasPanel.add(gasSpinner);     // Spinner below label
+        gasPanel.add(vehicleLabel);   // Label on top
         gasPanel.add(vehicleChoices); // ComboBox at the bottom
 
         this.add(gasPanel);
 
+        // Set layout for button panel
         controlPanel.setLayout(new GridLayout(2, 5));
 
         // Row 1
@@ -117,67 +97,28 @@ public class CarView extends JFrame{
         this.add(controlPanel);
         controlPanel.setBackground(Color.CYAN);
 
-        // This actionListener is for the gas button only
-        // TODO: Create more for each component as necessary
-        gasButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) { carC.inputHandler.gas(spinnerValue); }
-        });
-        brakeButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) { carC.inputHandler.brake(spinnerValue);}
-        });
-        turboOnButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {carC.inputHandler.setTurboOn();}
-        });
+        // Action listeners
+        gasButton.addActionListener(e -> carC.inputHandler.gas(spinnerValue));
 
-        turboOffButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {carC.inputHandler.setTurboOff();}
-        });
+        brakeButton.addActionListener(e -> carC.inputHandler.brake(spinnerValue));
 
-        liftBedButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {carC.inputHandler.raiseRamp(spinnerValue);}
-        });
+        turboOnButton.addActionListener(e -> carC.inputHandler.setTurboOn());
 
-        lowerBedButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {carC.inputHandler.lowerRamp(spinnerValue);}
-        });
+        turboOffButton.addActionListener(e -> carC.inputHandler.setTurboOff());
 
-        startButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {carC.inputHandler.startAllCars();}
-        });
+        liftBedButton.addActionListener(e -> carC.inputHandler.raiseRamp(spinnerValue));
 
-        stopButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {carC.inputHandler.stopAllCars();}
-        });
+        lowerBedButton.addActionListener(e -> carC.inputHandler.lowerRamp(spinnerValue));
 
-        vehicleChoices.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                selected = (VehicleType) vehicleChoices.getSelectedItem();
-                System.out.println("You selected: " + selected);
-            }
-        });
+        startButton.addActionListener(e -> carC.inputHandler.startAllCars());
 
-        addCarButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                carC.inputHandler.addVehicle(selected);
-            }
-        });
+        stopButton.addActionListener(e -> carC.inputHandler.stopAllCars());
 
-        removeCarButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                carC.inputHandler.removeVehicle();
-            }
-        });
+        vehicleChoices.addActionListener(e -> selected = (VehicleType) vehicleChoices.getSelectedItem());
+
+        addCarButton.addActionListener(e -> carC.inputHandler.addVehicle(selected));
+
+        removeCarButton.addActionListener(e -> carC.inputHandler.removeVehicle());
 
         // Make the frame pack all it's components by respecting the sizes if possible.
         this.pack();
